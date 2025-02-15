@@ -1,6 +1,6 @@
 import socket
 
-# Caesar Cipher Encryption Function
+
 def caesar_encrypt(text, shift):
     encrypted = ""
     for char in text:
@@ -12,28 +12,28 @@ def caesar_encrypt(text, shift):
     return encrypted
 
 def client_program():
-    host = "127.0.0.1"  # Server address
-    port = 12345  # Port number
+    host = "127.0.0.1"  
+    port = 12345 
 
-    client_socket = socket.socket()  # Create socket object
-    client_socket.connect((host, port))  # Connect to server
+    client_socket = socket.socket()  
+    client_socket.connect((host, port))  
 
-    shift = 3  # Caesar cipher shift (same shift as the server)
+    shift = 3  
 
     while True:
-        message = input("Enter message to send to server: ")  # Get user input
+        message = input("Enter message to send to server: ")  
 
-        # Encrypt message using Caesar cipher
+       
         encrypted_message = caesar_encrypt(message, shift)
-        client_socket.send(encrypted_message.encode())  # Send encrypted message to server
+        client_socket.send(encrypted_message.encode())  
         
-        data = client_socket.recv(1024).decode()  # Receive response from server
+        data = client_socket.recv(1024).decode()  
         print("Server:", data)
 
         if message.lower() == "exit":
-            break  # Exit the loop if 'exit' message is sent
+            break  
 
-    client_socket.close()  # Close the connection
+    client_socket.close()  
 
 if __name__ == '__main__':
     client_program()
