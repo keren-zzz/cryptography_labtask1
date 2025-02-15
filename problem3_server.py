@@ -1,18 +1,18 @@
 import socket
 
-# Playfair cipher functions
+
 def create_playfair_matrix(key):
     matrix = []
-    key = ''.join([char.upper() for char in key if char.isalpha()]).replace("J", "I")  # Replace J with I
+    key = ''.join([char.upper() for char in key if char.isalpha()]).replace("J", "I")  
     seen = set()
 
-    # Add characters from the key to the matrix
+  
     for char in key:
         if char not in seen:
             seen.add(char)
             matrix.append(char)
 
-    # Add remaining letters of the alphabet that are not in the key
+  
     for char in "ABCDEFGHIKLMNOPQRSTUVWXYZ":
         if char not in seen:
             seen.add(char)
@@ -59,7 +59,7 @@ def playfair_decrypt(text, key):
         decrypted_text += decrypt_pair(pair, matrix)
     return decrypted_text
 
-# Server setup
+
 def start_server():
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind(("localhost", 9999))
@@ -70,16 +70,16 @@ def start_server():
         client_socket, client_address = server_socket.accept()
         print(f"Connection established with {client_address}")
 
-        # Receive the encrypted message from client
+       
         encrypted_message = client_socket.recv(1024).decode()
         print(f"Received encrypted message: {encrypted_message}")
 
-        # Decrypt the message
-        key = "MYKEY"  # You can change the key to anything
+       
+        key = "MYKEY" 
         decrypted_message = playfair_decrypt([encrypted_message[i:i+2] for i in range(0, len(encrypted_message), 2)], key)
         print(f"Decrypted message: {decrypted_message}")
 
-        # Send the response back
+        
         client_socket.send(decrypted_message.encode())
 
         client_socket.close()
