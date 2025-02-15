@@ -1,6 +1,6 @@
 import socket
 
-# Caesar Cipher Decryption Function
+
 def caesar_decrypt(text, shift):
     decrypted = ""
     for char in text:
@@ -12,37 +12,37 @@ def caesar_decrypt(text, shift):
     return decrypted
 
 def server_program():
-    host = "127.0.0.1"  # Localhost
-    port = 12345  # Port number
+    host = "127.0.0.1"  
+    port = 12345  
 
-    server_socket = socket.socket()  # Create socket object
-    server_socket.bind((host, port))  # Bind the host and port
+    server_socket = socket.socket()  
+    server_socket.bind((host, port))  
 
-    server_socket.listen(1)  # Allow one connection at a time
+    server_socket.listen(1) 
     print(f"Server is listening on {host}:{port}...")
     
-    conn, address = server_socket.accept()  # Accept connection
+    conn, address = server_socket.accept()  
     print(f"Connection from {address}")
 
-    shift = 3  # Caesar cipher shift (same shift used by the client)
+    shift = 3  
     
     while True:
-        # Receive data from client
+       
         data = conn.recv(1024).decode()
         if not data:
-            break  # If no data, close connection
+            break 
 
         print("Encrypted message received:", data)
 
-        # Decrypt message using Caesar cipher
+      
         decrypted_message = caesar_decrypt(data, shift)
         print("Decrypted message:", decrypted_message)
 
-        # Send back the decrypted message as server response
+      
         response = "Server response: " + decrypted_message
-        conn.send(response.encode())  # Send response back to client
+        conn.send(response.encode()) 
 
-    conn.close()  # Close connection
+    conn.close()  
 
 if __name__ == '__main__':
     server_program()
