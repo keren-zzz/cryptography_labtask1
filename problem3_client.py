@@ -1,9 +1,9 @@
 import socket
 
-# Playfair cipher functions
+
 def create_playfair_matrix(key):
     matrix = []
-    key = ''.join([char.upper() for char in key if char.isalpha()]).replace("J", "I")  # Replace J with I
+    key = ''.join([char.upper() for char in key if char.isalpha()]).replace("J", "I")  
     seen = set()
 
     for char in key:
@@ -48,20 +48,20 @@ def playfair_encrypt(text, key):
         encrypted_text += encrypt_pair(pair, matrix)
     return encrypted_text
 
-# Client setup
+
 def start_client():
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect(("localhost", 9999))
 
-    # Get message to encrypt and send it
+   
     message = input("Enter message to send to the server: ")
-    key = "MYKEY"  # Key to use for Playfair cipher encryption
+    key = "MYKEY" 
     encrypted_message = playfair_encrypt(message, key)
 
-    # Send encrypted message to server
+ 
     client_socket.send(encrypted_message.encode())
 
-    # Receive the decrypted message from server
+ 
     decrypted_message = client_socket.recv(1024).decode()
     print(f"Decrypted message from server: {decrypted_message}")
 
